@@ -1,0 +1,32 @@
+{
+    "name": "fomvasss/epochta-sms",
+    "type": "library",
+    "description": "Package for sending SMS in Laravel 5.3",
+    "keywords": [
+        "epochta",
+        "sms"
+    ],
+    "homepage": "https://github.com/fomvasss/epochta-sms",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fomin Vasyl",
+            "email": "fomin.vasil@gmail.com"
+        }
+    ],
+    "require": {
+        "php" : ">=5.5.9",
+        "fomvasss/epochta-sms": "dev-master"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Fomvasss\\Epochta\\": "src"
+        }
+    },
+    "suggest": {
+        "illuminate/support": "Required to use with Laravel Framework (~5.3)."
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
