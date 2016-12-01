@@ -2,7 +2,7 @@
 Package for sending SMS in Laravel 5.3 (use service https://www.epochta.ru)
 
 # Install
-composer require "fomvasss/epochta-sms":dev-master
+composer require "fomvasss/epochta-sms":dev-fomin
 
 register the service provider in config/app.php in the providers array:
   Fomvasss\Epochta\EpochtaServiceProvider::class,
