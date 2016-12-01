@@ -15,8 +15,7 @@
         }
     ],
     "require": {
-        "php" : ">=5.5.9",
-        "fomvasss/epochta-sms": "dev-master"
+        "php" : ">=5.5.9"
     },
 
     "autoload": {
