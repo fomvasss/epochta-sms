@@ -28,18 +28,14 @@ class EpochtaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-       // $this->registerEpochta();
+       // 
     }
 
 
 
     private function registerEpochta()
     {
-        $this->app->bind('laratrust', function ($app) {
-            return new Epochta($app);
-        });
-
-        $this->app->alias('epochta', 'Epochta\Epochta');
+        //
     }
 
 
