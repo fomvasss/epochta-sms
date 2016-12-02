@@ -5,14 +5,14 @@ return [
 
     //public & private ключи, можно установить на странице https://atompark.com/members/settings#sms
 
-    'sms_key_private' => '',
+    'private_key' => '',
 
-    'sms_key_public' => '',
-
-    'url_gareway' => 'http://atompark.com/api/sms/',
+    'public_key' => '',
 
     'test_mode' => true,
 
-    'format_response' => 'json',
+    'sms_lifetime' => 0,    //Время жизни смс (0 = максимум, 1, 6, 12, 24 часа)
+
+    'currency' => 'USD',    //'USD','GBP','UAH','RUB','EUR'
 
 ];

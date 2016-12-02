@@ -2,6 +2,7 @@
 
 namespace Fomvasss\Epochta;
 
+use Fomvasss\Epochta\Services\Epochta;
 use Illuminate\Support\ServiceProvider;
 
 class EpochtaServiceProvider extends ServiceProvider
@@ -16,9 +17,6 @@ class EpochtaServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/config.php' => app()->basePath() . '/config/epochta_sms.php'
         ]);
-
-        //include __DIR__.'/routes.php';
-
     }
 
     /**
@@ -28,7 +26,9 @@ class EpochtaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-       // 
+        $this->app->singleton('Epochta', function($app) {
+            return new Epochta();
+        });
     }
 
 

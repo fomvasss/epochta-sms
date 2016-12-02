@@ -4,7 +4,8 @@ namespace Fomvasss\Epochta\Libraries;
 
 use Illuminate\Support\Facades\Config;
 
-class APISMS {
+class APISMS
+{
 
     private $privateKey;
     private $publicKey;
@@ -13,13 +14,14 @@ class APISMS {
     private $version;
     private $testMode;
 
-    function __construct(){
-        $this->privateKey = Config::get('epochta_sms.sms_key_private');
-        $this->publicKey = Config::get('epochta_sms.sms_key_public');
-        $this->url = Config::get('epochta_sms.url_gareway');
+    function __construct() {
+
+        $this->privateKey = Config::get('epochta_sms.private_key');
+        $this->publicKey = Config::get('epochta_sms.public_key');
+        $this->url = 'http://atompark.com/api/sms/';
         $this->testMode = Config::get('epochta_sms.test_mode');
         $this->version = '3.0';
-        $this->formatResponse = Config::get('epochta_sms.format_response');
+        $this->formatResponse = 'json';
     }
 
     public  function execCommad($command,$params,$simple=false){
@@ -76,7 +78,7 @@ class APISMS {
 
 
 
-    /************************* with original Stat.php ***************************/
+    /************************* with original API file Stat.php ***************************/
     /*
 **	creating campaign
 **	$sender - sender. Up to 14 numbers for numeric senders, up to 11 for alphanumeric
