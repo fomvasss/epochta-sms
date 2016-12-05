@@ -99,7 +99,7 @@ class Epochta
 
         $result = $this->sms->getCampaignDeliveryStats($id);
         if (empty($result['result']['status'])) {
-            Log::error("Epochta Error: Error connect from server or Invalid number phone. Code error:"); //.empty($result["result"]["code"]) ? null : $result["result"]["code"]
+            Log::error('Epochta Error: Error connect from server or Invalid number phone. ID SMS: '. $id .' Code error:'); //.empty($result["result"]["code"]) ? null : $result["result"]["code"]
             return 'Ошибка соеденения с сервером';
         };
 
