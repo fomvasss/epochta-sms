@@ -104,6 +104,7 @@ class Epochta
 
         $result = $this->sms->getCampaignDeliveryStats($id);
         if (empty($result['result']['status'])) {
+            Log::error("Error SMS: Ошибка соеденения с сервером или Неверный номер тел. Код:".empty($result["result"]["code"]) ? null : $result["result"]["code"]);
             return 'Ошибка соеденения с сервером';
         };
 
