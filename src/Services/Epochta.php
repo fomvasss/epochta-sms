@@ -28,15 +28,10 @@ class Epochta
         $this->currency = Config::get('epochta_sms.currency');
     }
 
-    public function test($t = 'Ok')
-    {
-        return 'Epochta test '.$t;
-    }
-
     private function checkKey()
     {
         if (empty(Config::get('epochta_sms.private_key')) || empty(Config::get('epochta_sms.private_key'))) {
-            Log::error('Error SMS: Not set private or public key');
+            Log::error('Epochta Error: Not set private or public key');
             return 0;
         }
     }
@@ -56,11 +51,11 @@ class Epochta
         $res = $this->sms->sendSMS($sender, $text, $phone, null, $this->sms_lifetime);
 
         if (empty($res['result']['id'])) {
-            Log::error('Error sending SMS: ' . $phone . isset($res['code']) ? $res['code'] : null);
+            Log::error('Epochta Error! Not sending SMS: ' .$phone. ' Error code: ' . isset($res['code']) ? $res['code'] : null);
             return 0;
         }
 
-        Log::info('Sended SMS: ' . $phone . '. ID :' . $res['result']['id'] . 'Вероятно ошибка связи с сервером СМС');
+        Log::info('Epochta sended SMS OK: ' . $phone . '. ID SMS:' . $res['result']['id']);
         return $res['result']['id'];
     }
 
@@ -81,7 +76,7 @@ class Epochta
             return $res["result"]["balance_currency"];
         }
         elseif (isset($res["result"]["error"])) {
-            Log::error("Error SMS: ".$res["result"]["code"]);
+            Log::error("Epochta Error getUserBalance(). Code error: ".$res["result"]["code"]);
             return 0;
         }
         else {
@@ -104,7 +99,7 @@ class Epochta
 
         $result = $this->sms->getCampaignDeliveryStats($id);
         if (empty($result['result']['status'])) {
-            Log::error("Error SMS: Ошибка соеденения с сервером или Неверный номер тел. Код:".empty($result["result"]["code"]) ? null : $result["result"]["code"]);
+            Log::error("Epochta Error: Error connect from server or Invalid number phone. Code error:"); //.empty($result["result"]["code"]) ? null : $result["result"]["code"]
             return 'Ошибка соеденения с сервером';
         };
 
