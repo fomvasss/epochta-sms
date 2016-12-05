@@ -28,6 +28,11 @@ class Epochta
         $this->currency = Config::get('epochta_sms.currency');
     }
 
+    public function test($t = 'Ok')
+    {
+        return 'Epochta test '.$t;
+    }
+
     private function checkKey()
     {
         if (empty(Config::get('epochta_sms.private_key')) || empty(Config::get('epochta_sms.private_key'))) {
@@ -46,6 +51,8 @@ class Epochta
     {
         $this->checkKey();
 
+        $phone = $this->clearNumber($phone);
+
         $res = $this->sms->sendSMS($sender, $text, $phone, null, $this->sms_lifetime);
 
         if (empty($res['result']['id'])) {
@@ -53,7 +60,7 @@ class Epochta
             return 0;
         }
 
-        Log::info('Sended SMS: ' . $phone . '. ID :' . $res['result']['id']);
+        Log::info('Sended SMS: ' . $phone . '. ID :' . $res['result']['id'] . 'Вероятно ошибка связи с сервером СМС');
         return $res['result']['id'];
     }
 
@@ -111,5 +118,10 @@ class Epochta
     }
 
 
+
+    private function clearNumber($number)
+    {
+        return str_replace([' ', '(', ')','.','-'], '', $number);
+    }
 
 }
