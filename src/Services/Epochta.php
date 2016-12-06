@@ -51,7 +51,7 @@ class Epochta
         $res = $this->sms->sendSMS($sender, $text, $phone, null, $this->sms_lifetime);
 
         if (empty($res['result']['id'])) {
-            Log::error('Epochta Error! Not sending SMS: ' .$phone. ' Error code: ' . isset($res['code']) ? $res['code'] : null);
+            Log::error('Epochta Error! Not sending SMS. Error number: ' .$phone);
             return 0;
         }
 
@@ -96,11 +96,13 @@ class Epochta
         $this->checkKey();
 
         //$status = $sms->getCampaignInfo($id);
-
+        if ($id == 0 ) {
+            return 'Ошибка отправки';
+        }
         $result = $this->sms->getCampaignDeliveryStats($id);
         if (empty($result['result']['status'])) {
             Log::error('Epochta Error: Error connect from server or Invalid number phone. ID SMS: '. $id .' Code error:'); //.empty($result["result"]["code"]) ? null : $result["result"]["code"]
-            return 'Неверно задат номер или ошибка сервера';
+            return 'Ошибка сервера';
         };
 
         switch ($result['result']['status'][0]) {
