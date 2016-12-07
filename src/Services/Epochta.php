@@ -20,7 +20,10 @@ class Epochta
     private $sms_lifetime;
     private $currency;
 
-
+    /**
+     * Epochta constructor.
+     * Set configuration
+     */
     public function __construct()
     {
         $this->sms = new APISMS();
@@ -28,13 +31,6 @@ class Epochta
         $this->currency = Config::get('epochta_sms.currency');
     }
 
-    private function checkKey()
-    {
-        if (empty(Config::get('epochta_sms.private_key')) || empty(Config::get('epochta_sms.private_key'))) {
-            Log::error('Epochta Error: Not set private or public key');
-            return 0;
-        }
-    }
 
     /**
      * Quick send sms. No list using, just 1 phone
@@ -50,12 +46,12 @@ class Epochta
 
         $res = $this->sms->sendSMS($sender, $text, $phone, null, $this->sms_lifetime);
 
-        if (empty($res['result']['id'])) {
-            Log::error('Epochta Error! Not sending SMS. Error number: ' .$phone);
+        if (isset($res['error']) || empty($res['result']['id'])) {
+            Log::error('Epochta. Phone number: ' .$phone. '. ' . $res['error']);
             return 0;
         }
 
-        Log::info('Epochta sended SMS OK: ' . $phone . '. ID SMS:' . $res['result']['id']);
+        Log::info('Epochta. OK. Phone number: ' . $phone . '. ID SMS:' . $res['result']['id']);
         return $res['result']['id'];
     }
 
@@ -72,16 +68,12 @@ class Epochta
 
         $res=$account->getUserBalance($this->currency);
 
-        if (isset($res["result"]["balance_currency"])) {
-            return $res["result"]["balance_currency"];
-        }
-        elseif (isset($res["result"]["error"])) {
-            Log::error("Epochta Error getUserBalance(). Code error: ".$res["result"]["code"]);
+        if (isset($res['error']) || empty($res['result']['balance_currency'])) {
+            Log::error('Epochta. getUserBalance(). '.$res['error']);
             return 0;
         }
-        else {
-            return 0;
-        }
+
+        return $res["result"]["balance_currency"];
     }
 
     /**
@@ -96,16 +88,17 @@ class Epochta
         $this->checkKey();
 
         //$status = $sms->getCampaignInfo($id);
-        if ($id == 0 ) {
-            return 'Ошибка отправки';
+        if (empty($id)) {
+            return 'Ошибка ID SMS';
         }
-        $result = $this->sms->getCampaignDeliveryStats($id);
-        if (empty($result['result']['status'])) {
-            Log::error('Epochta Error: Error connect from server or Invalid number phone. ID SMS: '. $id .' Code error:'); //.empty($result["result"]["code"]) ? null : $result["result"]["code"]
+        $res = $this->sms->getCampaignDeliveryStats($id);
+        if (isset($res['error']) || empty($res['result']['status'])) {
+            Log::error('Epochta. ID SMS: '. $id .' ' . $res['error']);
+            dd($res);
             return 'Ошибка сервера';
         };
 
-        switch ($result['result']['status'][0]) {
+        switch ($res['result']['status'][0]) {
             case '0': return "В очереди отправки";
             case 'SENT': return "Отправлено";
             case 'DELIVERED': return "Доставлено";
@@ -116,10 +109,17 @@ class Epochta
     }
 
 
+    private function checkKey()
+    {
+        if (empty(Config::get('epochta_sms.private_key')) || empty(Config::get('epochta_sms.private_key'))) {
+            Log::error('Epochta Error: Not set private or public key');
+            return 0;
+        }
+    }
 
     private function clearNumber($number)
     {
-        return str_replace([' ', '(', ')','.','-'], '', $number);
+        return str_replace([' ', '(', ')','.','-','+'], '', '+'.$number);
     }
 
 }
