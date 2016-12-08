@@ -19,6 +19,7 @@ class Epochta
     private $sms;
     private $sms_lifetime;
     private $currency;
+    private $mode;
 
     /**
      * Epochta constructor.
@@ -29,13 +30,17 @@ class Epochta
         $this->sms = new APISMS();
         $this->sms_lifetime = Config::get('epochta_sms.sms_lifetime');
         $this->currency = Config::get('epochta_sms.currency');
+        $this->mode = Config::get('epochta_sms.test_mode');
     }
 
 
     /**
+     *
      * Quick send sms. No list using, just 1 phone
      *
-     * @param  int  $sender, stirng $text, string $phone
+     * @param string $sender
+     * @param string $text
+     * @param string $phone
      * @return int ID SMS or 0 if error sending
      */
     public function sendSms($sender, $text, $phone)
@@ -47,11 +52,14 @@ class Epochta
         $res = $this->sms->sendSMS($sender, $text, $phone, null, $this->sms_lifetime);
 
         if (isset($res['error']) || empty($res['result']['id'])) {
-            Log::error('Epochta. Phone number: ' .$phone. '. ' . $res['error']);
+
+            Log::error('Epochta. Error send SMS. Phone number: ' .$phone. '. ' . $res['error']);
+
             return 0;
         }
 
-        //Log::info('Epochta. OK. Phone number: ' . $phone . '. ID SMS:' . $res['result']['id']);
+        empty($this->mode) ? null : Log::info('Epochta. OK. Phone number: ' . $phone . '. ID SMS:' . $res['result']['id']);
+
         return $res['result']['id'];
     }
 
@@ -69,9 +77,11 @@ class Epochta
         $res=$account->getUserBalance($this->currency);
 
         if (isset($res['error']) || empty($res['result']['balance_currency'])) {
-            Log::error('Epochta. getUserBalance(). '.$res['error']);
+            Log::error('Epochta. Error getUserBalance(). '.$res['error']);
             return 0;
         }
+
+        empty($this->mode) ? null : Log::info('Epochta. OK. getUserBalance() = ' . $res["result"]["balance_currency"]);
 
         return $res["result"]["balance_currency"];
     }
@@ -88,13 +98,12 @@ class Epochta
         $this->checkKey();
 
         //$status = $sms->getCampaignInfo($id);
-        if (empty($id)) {
+        if (empty($id) || $id == 0) {
             return 'Ошибка ID SMS';
         }
         $res = $this->sms->getCampaignDeliveryStats($id);
         if (isset($res['error']) || empty($res['result']['status'])) {
-            Log::error('Epochta. ID SMS: '. $id .' ' . $res['error']);
-            dd($res);
+            Log::error('Epochta. Error Status. ID SMS: '. $id .' ' . $res['error']);
             return 'Ошибка сервера';
         };
 
