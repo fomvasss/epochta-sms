@@ -3,7 +3,11 @@
 
 return [
 
-    //public & private ключи, можно установить на странице https://atompark.com/members/settings#sms
+    /*
+    |--------------------------------------------------------------------------
+    | Set public && private key on page https://atompark.com/members/settings#sms
+    |--------------------------------------------------------------------------
+    */
 
     'private_key' => '',
 
@@ -11,8 +15,8 @@ return [
 
     'test_mode' => true,
 
-    'sms_lifetime' => 0,    //Время жизни смс (0 = максимум, 1, 6, 12, 24 часа)
+    'sms_lifetime' => 0,        #Set life time (0 = max, 1, 6, 12, 24 hours)
 
-    'currency' => 'USD',    //'USD','GBP','UAH','RUB','EUR'
+    'currency' => 'USD',        #Set currency 'USD','GBP','UAH','RUB','EUR'
 
 ];

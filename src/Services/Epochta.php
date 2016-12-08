@@ -51,7 +51,7 @@ class Epochta
             return 0;
         }
 
-        Log::info('Epochta. OK. Phone number: ' . $phone . '. ID SMS:' . $res['result']['id']);
+        //Log::info('Epochta. OK. Phone number: ' . $phone . '. ID SMS:' . $res['result']['id']);
         return $res['result']['id'];
     }
 
