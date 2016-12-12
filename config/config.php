@@ -9,14 +9,14 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'private_key' => '',
+    'private_key' => env('EPOCHTA.PRIVATE_KEY', ''),
 
-    'public_key' => '',
+    'public_key' => env('EPOCHTA.PUBLIC_KEY', ''),
 
-    'test_mode' => true,
+    'test_mode' => env('EPOCHTA.TEST_MODE', true),
 
-    'sms_lifetime' => 0,        #Set life time (0 = max, 1, 6, 12, 24 hours)
+    'sms_lifetime' => env('EPOCHTA.SMS_LIFETIME', 0),        #Set life time (0 = max, 1, 6, 12, 24 hours)
 
-    'currency' => 'USD',        #Set currency 'USD','GBP','UAH','RUB','EUR'
+    'currency' => env('EPOCHTA.CURRENCY', 'USD'),        #Set currency 'USD','GBP','UAH','RUB','EUR'
 
 ];

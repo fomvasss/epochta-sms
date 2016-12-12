@@ -39,6 +39,14 @@ Epochta::getUserBalance()   //return float
 ```
 Epochta::getSmsStatus($idSms);  //return string status SMS
 ```
+Function getSmsStatus() return next statuses:
+- Ошибка сервера
+- В очереди отправки
+- Отправлено
+- Доставлено
+- Не доставлено
+- Неверный номер
+- Отрправлено в спам
 
 ##Using objects APISMS, Addressbook and Account (original API)
 ```
