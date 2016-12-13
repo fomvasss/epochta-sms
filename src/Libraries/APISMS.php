@@ -41,7 +41,6 @@ class APISMS
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_URL, $this->url.$this->version .'/'.$command);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); #fix 12132016
         $result = curl_exec($ch);
         if(curl_errno($ch)>0) return array('success'=> false,  'code'=>curl_errno($ch),'error'=>curl_error($ch));
         elseif ($this->formatResponse=='json') return $this->processResponseJSON($result,$simple);
