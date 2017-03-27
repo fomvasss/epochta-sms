@@ -19,10 +19,10 @@ class APISMS
         $this->privateKey = Config::get('epochta_sms.private_key');
         $this->publicKey = Config::get('epochta_sms.public_key');
         if (Config::get('epochta_sms.https') == true) {
-            $this->url = 'https://atompark.com/api/sms/';
+            $this->url = 'https://api.atompark.com/sms/';
         }
         else {
-            $this->url = 'http://atompark.com/api/sms/';
+            $this->url = 'http://api.atompark.com/sms/';
         }
         $this->testMode = Config::get('epochta_sms.test_mode');
         $this->version = '3.0';

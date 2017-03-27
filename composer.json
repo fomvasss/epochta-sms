@@ -1,7 +1,7 @@
 {
     "name": "fomvasss/epochta-sms",
-    "type": "library",
-    "description": "Package for sending SMS in Laravel 5.3",
+    "type": "package",
+    "description": "Package for sending SMS in Laravel ~5.3",
     "keywords": [
         "epochta",
         "sms"

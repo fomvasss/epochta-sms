@@ -1,9 +1,9 @@
 # Epochta-sms
-Package for sending SMS in Laravel 5.3 (use service https://www.epochta.ru)
+Package for sending SMS in Laravel ~5.3 (use service https://www.epochta.ru)
 
 # Install
 ```
-composer require "fomvasss/epochta-sms":dev-fomin
+composer require "fomvasss/epochta-sms"
 ```
 register the service provider and aliases in config/app.php:
 ```
